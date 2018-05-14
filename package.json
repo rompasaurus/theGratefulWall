@@ -4,6 +4,7 @@
   "description": "Version one unauthenticated mockup of the grate wall gratitude site",
   "main": "app.js",
   "scripts": {
+    "start": "app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael McHenry",

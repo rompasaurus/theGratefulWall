@@ -56,8 +56,8 @@ app.post("/", function(req,res){
         }else{
             res.redirect("/");
         }
-    })
-})
+    });
+});
 
 app.get('/',function(req,res){
     Gratitude.find({}, function(err,gratitudes){
