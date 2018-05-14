@@ -8,7 +8,7 @@ var bodyParser  = require("body-parser"),
 //app initilizes the express frameworks and is the variable in which all express commands are acted upon
     app         = express();
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
-mongoose.connect("mongodb://tgw:tgwauth>@ds121960.mlab.com:21960/the_grateful_wall_gratitudes");
+mongoose.connect("mongodb://tgw:tgwauth@ds121960.mlab.com:21960/the_grateful_wall_gratitudes");
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
 app.set("view engine", "ejs");
 //establishes the public folder as a root folder this will contain css stysheets
