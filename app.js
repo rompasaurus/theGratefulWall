@@ -48,6 +48,10 @@ app.get("/new", function (req, res) {
     res.render("new");
 });
 
+app.get("/about", function (req, res) {
+    res.render("about");
+});
+
 app.post("/upvote/:id", function(req, res) {
     Gratitude.findById(req.params.id, function(err, foundGratitude){
         if(err){
