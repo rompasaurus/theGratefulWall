@@ -1,0 +1,14 @@
+<% gratitudes.forEach(function(gratitude){%>
+    <div class="ui container padded text ">
+        <div class="ui text padded segment attached">
+            <h3>"I am grateful for <%=gratitude.description %>"</h4>
+            <p>- <%=gratitude.name %></p>
+        </div>
+            <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
+                <div class="ui two attached bottom  buttons  ">
+                    <button class="ui button"><i class="thumbs up outline icon"></i>       <%= gratitude.upvote %>     </button>
+                    <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
+                </div>
+            </form>
+    </div>
+<% }); %>

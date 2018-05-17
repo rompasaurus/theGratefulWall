@@ -23,7 +23,7 @@ var gratitudeSchema = new mongoose.Schema({
     created: {type: Date, default: Date.now},
     lastVote: {type: Date, default: Date.now},
     upvote: {type: Number, default: 1},
-    downvote: {type: Number, default: 1},
+    downvote: {type: Number, default: 0},
     comments: [String]
 });
 var Gratitude = mongoose.model("Gratitude",gratitudeSchema);
@@ -46,6 +46,32 @@ var Gratitude = mongoose.model("Gratitude",gratitudeSchema);
 //presents the landing page for the root of the site
 app.get("/new", function (req, res) {
     res.render("new");
+});
+
+app.post("/upvote/:id", function(req, res) {
+    Gratitude.findById(req.params.id, function(err, foundGratitude){
+        if(err){
+            console.log("cant find post to upvote");
+        }else{
+            foundGratitude.upvote++;           
+            console.log("downvoted post" + foundGratitude);
+            foundGratitude.save();
+            res.redirect("/");
+        }
+    })
+});
+
+app.post("/downvote/:id", function(req, res) {
+    Gratitude.findById(req.params.id, function(err, foundGratitude){
+        if(err){
+            console.log("cant find post to upvote");
+        }else{
+            foundGratitude.downvote++;
+            console.log("downvoted post" + foundGratitude);
+            foundGratitude.save();
+            res.redirect("/");
+        }
+    })
 });
 
 //Adds gratitude submitted via new form page 
