@@ -2,19 +2,18 @@
 
     <div class="ui equal width center aligned padded grid">
         <div class="column">
-            <h2>Today's Gratitudes</h2>
+            <h2>Gratitudes by Date Descending</h2>
         </div>
-    </div>
+    </div>    
     <div class="ui secondary pointing ten item menu">
-        <a class="active item" href="/">Today</a>        
+        <a class="item" href="/">Today</a>        
         <a class="item" href="/sort/dateAscend">Date +</a>
-        <a class="item" href="/sort/dateDescend">Date -</a>
+        <a class="active item" href="/sort/dateDescend">Date -</a>
         <a class="item" href="/sort/upvote">Upvote</a>
         <a class="item" href="/sort/downvote">Downvote</a>
         <a class="item" href="/sort/popular">Popularity</a>
     </div>
-
-<div class="ui container center aligned ">
+<div class="ui container ">
     <div class="ui equal width center aligned padded grid">
         <div class="column">
             <% include partials/gratitude %>

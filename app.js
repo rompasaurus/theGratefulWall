@@ -43,21 +43,34 @@ var Gratitude = mongoose.model("Gratitude",gratitudeSchema);
 //         }
 //     })
 
-//presents the landing page for the root of the site
+
 app.get("/new", function (req, res) {
     res.render("new");
 });
 
+//About Page
 app.get("/about", function (req, res) {
     res.render("about");
 });
+//Adds gratitude submitted via new form page 
+app.post("/", function(req,res){
+    Gratitude.create(req.body.gratitude, function(err,newGratitude){
+        if(err){
+            res.render("new");
+        }else{
+            res.redirect("/");
+        }
+    });
+});
 
+//upvote and downvote requests
 app.post("/upvote/:id", function(req, res) {
     Gratitude.findById(req.params.id, function(err, foundGratitude){
         if(err){
             console.log("cant find post to upvote");
         }else{
-            foundGratitude.upvote++;           
+            foundGratitude.upvote++;    
+            foundGratitude.lastVote = new Date();
             console.log("downvoted post" + foundGratitude);
             foundGratitude.save();
             res.redirect("/");
@@ -71,24 +84,74 @@ app.post("/downvote/:id", function(req, res) {
             console.log("cant find post to upvote");
         }else{
             foundGratitude.downvote++;
+            foundGratitude.lastVote = new Date();
             console.log("downvoted post" + foundGratitude);
             foundGratitude.save();
             res.redirect("/");
         }
     })
 });
+//Sorted Views
+app.get("/sort/:id", function(req, res) {
+   switch(req.params.id){     
+        case "dateDescend":
+            Gratitude.find({}).sort({ created: 'desc' }).exec(function(err,gratitudes){
+            if(err){
+                console.log("descension failed")
+            }else{
+                res.render('landingSorted/dateDescend',{gratitudes:gratitudes})
+            }    
+            });
+            break;
+        case "dateAscend":
+            Gratitude.find({}).sort({ created: 'asc' }).exec(function(err,gratitudes){
+            if(err){
+                console.log("naw man")
+            }else{
+                res.render('landingSorted/dateAscend',{gratitudes:gratitudes})
+            }    
+            });
+            break;
+        case "downvote":
+            Gratitude.find({}).sort({ downvote: -1  }).exec(function(err,gratitudes){
+            if(err){
+                console.log("naw man")
+            }else{
+                res.render('landingSorted/downvote',{gratitudes:gratitudes})
+            }    
+            });
+            break;
+        case "upvote":
+            Gratitude.find({}).sort({ upvote: -1 }).exec(function(err,gratitudes){
+            if(err){
+                console.log("naw man")
+            }else{
+                res.render('landingSorted/upvote',{gratitudes:gratitudes})
+            }    
+            });
+            break;
+        case "today":
+            Gratitude.find({}).sort({ created: 'desc' }).exec(function(err,gratitudes){
+            if(err){
+                console.log("naw man")
+            }else{
+                res.redirect('/')
+            }    
+            });
+            break;
+        case "popular":
+            Gratitude.find({}).sort({ upvote: -1, downvote: -1 }).exec(function(err,gratitudes){
+            if(err){
+                console.log("naw man")
+            }else{
+                res.render('landingSorted/popular',{gratitudes:gratitudes})
+            }    
+            });
+            break;
+      }
+})
 
-//Adds gratitude submitted via new form page 
-app.post("/", function(req,res){
-    Gratitude.create(req.body.gratitude, function(err,newGratitude){
-        if(err){
-            res.render("new");
-        }else{
-            res.redirect("/");
-        }
-    });
-});
-
+//presents the landing page for the root of the site
 app.get('/',function(req,res){
     Gratitude.find({}, function(err,gratitudes){
         if(err){
