@@ -140,7 +140,7 @@ app.get("/sort/:id", function(req, res) {
             });
             break;
         case "popular":
-            Gratitude.find({}).sort({ upvote: -1, downvote: -1 }).exec(function(err,gratitudes){
+            Gratitude.find({}).sort({ lastVote: -1, upvote: -1 }).exec(function(err,gratitudes){
             if(err){
                 console.log("naw man")
             }else{
