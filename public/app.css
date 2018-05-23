@@ -29,3 +29,11 @@
     .ui.table {
       table-layout: fixed;
     }
+    
+    button{
+     outline:none;
+  }
+  
+  :focus {
+outline: 0;
+}

@@ -62,6 +62,30 @@ app.post("/", function(req,res){
         }
     });
 });
+//Show Gratitude
+app.get("/gratitude/:id", function(req, res) {
+    Gratitude.findById(req.params.id, function(err, foundGratitude) {
+        if(err){
+            console("aint no gratitude information")
+        }else{
+            res.render("showGratitude", {gratitude:foundGratitude})
+        }
+    })
+})
+//post gratitude comment
+app.post("/gratitude/:id", function(req, res) {
+    var comment = req.body.gratitude.comments
+    Gratitude.findById(req.params.id, function(err, foundGratitude) {
+        if(err){
+            console("aint no gratitude information")
+        }else{
+            foundGratitude.comments.push(comment);
+            foundGratitude.save();
+            console.log("added comment to " + foundGratitude);
+            res.redirect('back');
+        }
+    })
+})
 
 //upvote and downvote requests
 app.post("/upvote/:id", function(req, res) {
@@ -73,7 +97,7 @@ app.post("/upvote/:id", function(req, res) {
             foundGratitude.lastVote = new Date();
             console.log("downvoted post" + foundGratitude);
             foundGratitude.save();
-            res.redirect("/");
+            res.redirect('back');
         }
     })
 });
@@ -87,7 +111,7 @@ app.post("/downvote/:id", function(req, res) {
             foundGratitude.lastVote = new Date();
             console.log("downvoted post" + foundGratitude);
             foundGratitude.save();
-            res.redirect("/");
+            res.redirect('back');
         }
     })
 });
@@ -99,7 +123,7 @@ app.get("/sort/:id", function(req, res) {
             if(err){
                 console.log("descension failed")
             }else{
-                res.render('landingSorted/dateDescend',{gratitudes:gratitudes})
+                res.render('dateDescend',{gratitudes:gratitudes})
             }    
             });
             break;
@@ -108,7 +132,7 @@ app.get("/sort/:id", function(req, res) {
             if(err){
                 console.log("naw man")
             }else{
-                res.render('landingSorted/dateAscend',{gratitudes:gratitudes})
+                res.render('dateAscend',{gratitudes:gratitudes})
             }    
             });
             break;
@@ -117,7 +141,7 @@ app.get("/sort/:id", function(req, res) {
             if(err){
                 console.log("naw man")
             }else{
-                res.render('landingSorted/downvote',{gratitudes:gratitudes})
+                res.render('downvote',{gratitudes:gratitudes})
             }    
             });
             break;
@@ -126,7 +150,7 @@ app.get("/sort/:id", function(req, res) {
             if(err){
                 console.log("naw man")
             }else{
-                res.render('landingSorted/upvote',{gratitudes:gratitudes})
+                res.render('upvote',{gratitudes:gratitudes})
             }    
             });
             break;
@@ -144,7 +168,7 @@ app.get("/sort/:id", function(req, res) {
             if(err){
                 console.log("naw man")
             }else{
-                res.render('landingSorted/popular',{gratitudes:gratitudes})
+                res.render('popular',{gratitudes:gratitudes})
             }    
             });
             break;

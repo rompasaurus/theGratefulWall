@@ -1,0 +1,11 @@
+<div class="ui main text container segment">
+    <div class="ui huge header">Add Comment</div>
+    <form class="ui form" action="/gratitude/<%=gratitude._id%>" method="POST">
+        <div class="field">
+            <textarea name="gratitude[comments]"></textarea>
+        </div>
+        <div class="field">
+            <button class="ui button big" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

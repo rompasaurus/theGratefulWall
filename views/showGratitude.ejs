@@ -1,18 +1,33 @@
-<% gratitudes.forEach(function(gratitude){%>
+<% include partials/header %>
+    <div class="ui equal width center aligned padded grid">
+        <div class="column">
+            <h2>Comments</h2>
+        </div>
+    </div>
     <div class="ui container center aligned padded text ">
         <div class="ui text padded center segment attached">
-            <form class="ui form" action="/gratitude/<%=gratitude._id%>" method="GET">
-                <button class="ui button fluid" style=" background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
                     <h3>"I am grateful for <%=gratitude.description %>"</h4>
                     <p>- <%=gratitude.name %></p>
-                </button>
-            </form>
         </div>
             <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
-                <div class="ui two attached bottom  buttons  ">
+                <div class="ui two attached top  buttons  ">
                     <button class="ui button"><i class="thumbs up outline icon"></i>       <%= gratitude.upvote %>     </button>
                     <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
                 </div>
             </form>
     </div>
-<% }); %>
+    <% if(gratitude.comments.length == 0){ %>
+        <div class="ui equal width center aligned padded grid">
+                <p>No Comments</p>
+        </div>
+    <% }else{ %>
+    <% gratitude.comments.forEach(function(comment){ %>
+        <div class="ui container center aligned padded text segment ">
+                <p><%=comment %></p>
+        </div>
+    <% })}; %>    
+
+
+
+<% include partials/addCommentForm%>
+<% include partials/footer%>
