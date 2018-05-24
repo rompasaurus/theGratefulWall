@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+    <div class="ui equal width center aligned padded grid">
+        <div class="column">
+            <h2><%= title %></h2>
+        </div>
+    </div>    
+    <div class="ui secondary pointing ten item stackable menu">
+        <a class="<%=sortingActiveItem.today %>" href="/">Today</a>        
+        <a class="<%=sortingActiveItem.dateA %>" href="/sort/dateAscend">Date +</a>
+        <a class="<%=sortingActiveItem.dateD %>" href="/sort/dateDescend">Date -</a>
+        <a class="<%=sortingActiveItem.upvote %>" href="/sort/upvote">Upvote</a>
+        <a class="<%=sortingActiveItem.downvote %>" href="/sort/downvote">Downvote</a>
+        <a class="<%=sortingActiveItem.popularity %>" href="/sort/popular">Popularity</a>
+    </div>
+<div class="ui container ">
+    <div class="ui equal width center aligned padded grid">
+        <div class="column">
+            <% include partials/gratitude %>
+        </div>
+    </div>    
+</div>
+
+
+<% include partials/footer%>
