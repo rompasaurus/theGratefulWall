@@ -6,7 +6,12 @@ var bodyParser  = require("body-parser"),
 //express handles the http server and requests via easy to use notation
     express     = require("express"),
 //app initilizes the express frameworks and is the variable in which all express commands are acted upon
-    app         = express();
+    app         = express(),
+    User        = require("./models/user"),
+    passport    = require("passport"),
+    LocalStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose"),
+    Gratitude   = require("./models/gratitudeSchema");
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
 mongoose.connect("mongodb://tgw:tgwauth@ds121960.mlab.com:21960/the_grateful_wall_gratitudes");
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
@@ -16,17 +21,20 @@ app.use(express.static("public"));
 //Boiler initializaes formats for bodyparser
 app.use(bodyParser.urlencoded({extended: true}));
 
-//DB SCHEMA and initialization
-var gratitudeSchema = new mongoose.Schema({
-    description: String,
-    name: String,
-    created: {type: Date, default: Date.now},
-    lastVote: {type: Date, default: Date.now},
-    upvote: {type: Number, default: 1},
-    downvote: {type: Number, default: 0},
-    comments: [String]
-});
-var Gratitude = mongoose.model("Gratitude",gratitudeSchema);
+//import passport library and extend to app functionality
+app.use(passport.initialize())
+app.use(passport.session())
+//initilize User as auth db and establishes encryption serialization methods
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+
+app.use(require("express-session")({
+    secret: "this website sucks",
+    resave: false,
+    saveUninitialized: false
+}))
 
 //Test Data adding with error catching
 // Gratitude.create(
@@ -124,10 +132,7 @@ app.get("/sort/:id", function(req, res) {
             upvote:"item",
             downvote:"item",
             popularity:"item"
-       
    }
-   
-   
    
    switch(req.params.id){     
         case "dateDescend":
@@ -181,7 +186,7 @@ app.get("/sort/:id", function(req, res) {
             });
             break;
         case "popular":
-            sortingActiveItem.popular = "active item"
+            sortingActiveItem.popularity = "active item"
             Gratitude.find({}).sort({ lastVote: -1, upvote: -1 }).exec(function(err,gratitudes){
             if(err){
                 console.log("naw man")
@@ -203,8 +208,56 @@ app.get('/',function(req,res){
         }
     })
 });
+app.get("/user",isLoggedIn, function(req,res){
+    res.render("user")
+})
+//Authentication Logic
+//Signup Form
+//Signup form
+app.get("/register", function(req,res){
+    res.render("register")
+})
+//handle user signup
+app.post("/register", function(req,res){
+    User.register(new User({username: req.body.username}), req.body.password, function(err,user){
+        if(err){
+            console.log(err)
+            res.render('register')
+        }else{
+            console.log(user + " Succesfully registered")
+            passport.authenticate("local")(req,res, function(){
+                res.redirect("/user")
+            })
+        }
+    })
+})
+//Login Routes
+//render login form
+app.get("/login", function(req,res){
+    res.render("login")
+})
+//login Logic
+//middleware
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/user",
+    failureRedirect: "/login"
+}), function(req,res){
 
+})
 
+//logout
+app.get("/logout", function(req,res){
+    req.logout()
+    res.redirect("/")
+})
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next()        
+    }
+    console.log("something went terribly wrong")
+    res.redirect("login")
+}
 
 //start http server and listen on c9 defaul ip and port
 app.listen(process.env.PORT, process.env.IP, function(){
