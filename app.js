@@ -21,13 +21,6 @@ app.use(express.static("public"));
 //Boiler initializaes formats for bodyparser
 app.use(bodyParser.urlencoded({extended: true}));
 
-//import passport library and extend to app functionality
-app.use(passport.initialize())
-app.use(passport.session())
-//initilize User as auth db and establishes encryption serialization methods
-passport.use(new LocalStrategy(User.authenticate()))
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
 
 
 app.use(require("express-session")({
@@ -36,6 +29,13 @@ app.use(require("express-session")({
     saveUninitialized: false
 }))
 
+//import passport library and extend to app functionality
+app.use(passport.initialize())
+app.use(passport.session())
+//initilize User as auth db and establishes encryption serialization methods
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 //Test Data adding with error catching
 // Gratitude.create(
 //     {
@@ -51,6 +51,13 @@ app.use(require("express-session")({
 //         }
 //     })
 
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next()        
+    }
+    console.log("something went terribly wrong")
+    res.redirect("login")
+}
 
 app.get("/new", function (req, res) {
     res.render("new");
@@ -250,14 +257,6 @@ app.get("/logout", function(req,res){
     req.logout()
     res.redirect("/")
 })
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next()        
-    }
-    console.log("something went terribly wrong")
-    res.redirect("login")
-}
 
 //start http server and listen on c9 defaul ip and port
 app.listen(process.env.PORT, process.env.IP, function(){
