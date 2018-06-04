@@ -55,7 +55,7 @@ app.use(sorted);
 app.use(landing);
 
 //uncomment to use as app on heroku
-//app.listen(process.env.PORT, process.env.IP, function(){
-app.listen(8080, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
+//app.listen(8080, function(){
     console.log("Grateful wall has started and is listening on port " + process.env.PORT + "and IP " + process.env.IP);
 });
