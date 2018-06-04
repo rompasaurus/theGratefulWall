@@ -4,12 +4,24 @@
     <div class="ui huge header">Register</div>
     <form class="ui form" action="/register" method="POST">
         <div class="field">
-            <label>Username</label>
-            <input type="text" name= "username" placeholder="username">
+            <label for="firstName">First Name</label>
+            <input class="form-control" type="text" name="firstName" autocomplete="off" required />
         </div>
         <div class="field">
-            <label>Password</label>
-            <input type="password" name= "password" placeholder="password">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" type="text" name="lastName" autocomplete="off" required />
+        </div>
+        <div class="field">
+            <label for="username">Email</label>
+            <input class="form-control" type="email" name="email" autocomplete="off" required />
+        </div>
+        <div class="field">
+            <label for="username">User Name</label>
+            <input class="form-control" type="text" name="username" autocomplete="off" required />
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" autocomplete="off" required />
         </div>
         <div class="field">
             <button class="ui button big" type="submit">Submit</button>

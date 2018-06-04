@@ -7,7 +7,7 @@
     <div class="ui container center aligned text ">
         <div class="ui text center segment attached">
                     <h3>"I am grateful for <%=gratitude.description %>"</h3>
-                    <p><%=gratitude.name %></p>
+                    <p><%=gratitude.name.username %></p>
                     <p><%=gratitude.created.toLocaleDateString();%></p>
         </div>
             <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
@@ -16,19 +16,28 @@
                     <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
                 </div>
             </form>
+        <% if(gratitude.comments.length == 0){ %>
+        <h4 class="ui horizontal divider header">
+            No Comments
+        </h4>
+        <% }else{ %>
     </div>
-    <% if(gratitude.comments.length == 0){ %>
-        <div class="ui equal width center aligned padded grid">
-                <p>No Comments</p>
-        </div>
-    <% }else{ %>
     <% gratitude.comments.forEach(function(comment){ %>
         <div class="ui container center aligned padded text segment ">
-                <p><%=comment %></p>
+                <p><%=comment.comment %></p>
         </div>
-    <% })}; %>    
+    <% })}; %>
 
 
-
+<%if(isLoggedIn){ %>
 <% include partials/addCommentForm%>
+<% }if(!isLoggedIn){%>
+<div class="ui container center aligned text ">
+    <p>login or register to post comments</p>
+    <p><a href="/login">Login</a></p>
+    <p><a href="/register">Register New Account</a></p>
+</div>
+<%}%>
+
+
 <% include partials/footer%>

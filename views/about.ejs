@@ -1,4 +1,8 @@
+<%if(isLoggedIn){ %>
+<% include partials/headerLoggedin %>
+<% }if(!isLoggedIn){%>
 <% include partials/header %>
+<%}%>
 <div class="ui container center aligned padded text ">
     <h1>Welcome to the Grateful Wall</h1>
     <h2>What is this site? </h2>

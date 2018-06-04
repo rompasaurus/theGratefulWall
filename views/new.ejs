@@ -1,16 +1,16 @@
-<% include ./partials/header %>
+<% include ./partials/headerLoggedIn.ejs %>
 
 <div class="ui main text container segment">
     <div class="ui huge header">New Gratitude</div>
     <form class="ui form" action="/" method="POST">
         <div class="field">
             <label>"I am grateful for...</label>
-            <textarea name="gratitude[description]"></textarea>
+            <textarea name="description"></textarea>
         </div>
-        <div class="field">
-            <label>Name</label>
-            <input type="text" name="gratitude[name]" placeholder="name">
-        </div>
+        <!--<div class="field">-->
+            <!--<label>Name</label>-->
+            <!--<input type="text" name="gratitude[name]" placeholder="name">-->
+        <!--</div>-->
         <div class="field">
             <button class="ui button big" type="submit">Submit</button>
         </div>

@@ -5,31 +5,24 @@ var express = require("express"),
     router = express.Router();
 
 
-router.get("/new", function (req, res) {
-    res.render("new");
+router.get("/new",isLoggedIn, function (req, res) {
+    var isLoggedIn = req.isAuthenticated();
+    res.render("new",{isLoggedIn:isLoggedIn});
 });
 
 //About Page
 router.get("/about", function (req, res) {
-    res.render("about");
-});
-//Adds gratitude submitted via new form page
-router.post("/", function(req,res){
-    Gratitude.create(req.body.gratitude, function(err,newGratitude){
-        if(err){
-            res.render("new");
-        }else{
-            res.redirect("/");
-        }
-    });
+    var isLoggedIn = req.isAuthenticated();
+    res.render("about",{isLoggedIn:isLoggedIn});
 });
 //presents the landing page for the root of the site
 router.get('/',function(req,res){
+    var isLoggedIn = req.isAuthenticated();
     Gratitude.find({}, function(err,gratitudes){
         if(err){
             console.log("we aint found shit in no db");
         }else{
-            res.render('landing',{gratitudes:gratitudes,title:"Today's Top Gratitudes"});
+            res.render('landing',{gratitudes:gratitudes,title:"Today's Top Gratitudes",isLoggedIn:isLoggedIn});
         }
     })
 });

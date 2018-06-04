@@ -12,6 +12,7 @@ router.get("/sort/:id", function(req, res) {
         downvote:"item",
         popularity:"item"
     }
+    var isLoggedIn = req.isAuthenticated();
 
     switch(req.params.id){
         case "dateDescend":
@@ -20,7 +21,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("descension failed")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes by Date Descending", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes by Date Descending", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
@@ -30,7 +31,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("naw man")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes By Date Ascending", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes By Date Ascending", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
@@ -40,7 +41,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("naw man")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Downvoted Gratitudes", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Most Downvoted Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
@@ -50,7 +51,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("naw man")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Upvoted Gratitudes", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Most Upvoted Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
@@ -60,7 +61,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("naw man")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Today's Top Gratitudes", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Today's Top Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
@@ -70,7 +71,7 @@ router.get("/sort/:id", function(req, res) {
                 if(err){
                     console.log("naw man")
                 }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Popular Gratitudes", sortingActiveItem:sortingActiveItem})
+                    res.render('sorted',{gratitudes:gratitudes, title:"Most Popular Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
                 }
             });
             break;
