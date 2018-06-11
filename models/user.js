@@ -8,6 +8,24 @@ var UserSchema = new mongoose.Schema({
     lastName: String,
     email: {type: String, unique: true, required:true},
     isAdmin: { type: Boolean, default: false },
+    submittedComment:[
+        {
+            id:{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment"
+            },
+            date: {type: Date, default: Date.now}
+        }
+    ] ,
+    submittedGratitude:[
+        {
+            id:{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment"
+            },
+            date: {type: Date, default: Date.now}
+        }
+    ] ,
     favoriteComment:[
         {
             id:{

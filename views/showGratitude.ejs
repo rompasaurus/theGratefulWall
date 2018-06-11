@@ -1,5 +1,8 @@
+<%if(isLoggedIn){ %>
+<% include ./partials/headerLoggedIn %>
+<% }if(!isLoggedIn){%>
 <% include ./partials/header %>
-    <div class="ui equal width center aligned padded grid">
+<%}%>    <div class="ui equal width center aligned padded grid">
         <div class="column">
             <h2>Comments</h2>
         </div>

@@ -2,6 +2,7 @@ var express = require("express"),
     Gratitude = require("../models/gratitudeSchema"),
     Comment = require("../models/commentSchema"),
     passport =  require("passport"),
+    User = require("../models/user")
     router = express.Router();
 //Adds gratitude submitted via new form page
 router.post("/",isLoggedIn, function(req,res){
@@ -87,6 +88,15 @@ router.post("/gratitude/:id",isLoggedIn, function(req, res) {
         if (err) {
             console.log("cannot add comment")
         } else {
+            User.findById(req.user._id, function(err, foundUser){
+              if(err){
+                  console.log(err);
+              }else{
+                  foundUser.submittedComment.push(newComment._id);
+                  foundUser.save();
+                  console.log("associated comment to "+ foundUser.username)
+              }
+            })
             Gratitude.findById(req.params.id, function (err, foundGratitude) {
                 if (err) {
                     console("aint no gratitude information")
