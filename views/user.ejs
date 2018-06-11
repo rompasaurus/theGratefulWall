@@ -1,9 +1,26 @@
 <% include ./partials/headerLoggedIn.ejs %>
-
-<h3>Soon to be user page</h3>
-<p>You are logged in</p>
 <% if(isLoggedIn){%>
-<P><%= user %></P>
+<!--<P><%= user %></P>-->
 <% } %>
-
+<div class="ui equal width center aligned padded grid">
+    <div class="column">
+        <h2><%= user.username %></h2>
+        <a href="/logout"><p>logout</p></a>
+    </div>
+</div>
+<div class="ui secondary pointing six item stackable menu">
+    <a class="active item" href="/sort/today">Details</a>
+    <a class="item" href="/sort/dateAscend">Gratitudes</a>
+    <a class="item" href="/sort/dateDescend">Comments</a>
+    <a class="item" href="/sort/upvote">Upvoted</a>
+    <a class="item" href="/sort/popular">Favorites</a>
+</div>
+<div class="ui equal width center left aligned padded grid">
+    <div class="column">
+        <h4><b>Username: </b></h4><p class="center"><%= user.username%></p>
+        <h4><b>First Name: </b></h4>     <p><%= user.firstName%></p>
+        <P><b>Last Name: </b> </h4>      <p><%= user.lastName%></p>
+        <p><b>Email: </b>   </h4>        <p><%= user.email%></p>
+    </div>
+</div>
 <% include ./partials/footer %>
