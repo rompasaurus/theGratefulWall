@@ -15,12 +15,55 @@
     <a class="item" href="/sort/upvote">Upvoted</a>
     <a class="item" href="/sort/popular">Favorites</a>
 </div>
-<div class="ui equal width center left aligned padded grid">
+<h3 class="ui center aligned header">User Details</h3>
+<div class="ui four column doubling grid">
     <div class="column">
-        <h4><b>Username: </b></h4><p class="center"><%= user.username%></p>
-        <h4><b>First Name: </b></h4>     <p><%= user.firstName%></p>
-        <P><b>Last Name: </b> </h4>      <p><%= user.lastName%></p>
-        <p><b>Email: </b>   </h4>        <p><%= user.email%></p>
+        <div class="ui  aligned container">
+            <h4><b>Username: </b></h4>
+        </div>
+    </div>
+    <div class="column right">
+        <div class="ui right aligned container">
+            <p><%= user.username%></p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui aligned container">
+            <h4><b>Email: </b> </h4>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui right aligned container">
+            <p><%= user.email%></p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui aligned container">
+            <h4><b>First Name: </b> </h4>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui right aligned container">
+            <p><%= user.firstName%></p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui aligned container">
+            <h4><b>Last Name: </b></h4>
+        </div>
+    </div>
+    <div class="column right">
+        <div class="ui right aligned container">
+            <p><%= user.lastName%></p>
+        </div>
     </div>
 </div>
+<!--<div class="ui equal width center left aligned padded grid">-->
+    <!--<div class="column">-->
+        <!--<h4><b>Username: </b></h4><p class="center"><%= user.username%></p>-->
+        <!--<h4><b>First Name: </b></h4>     <p><%= user.firstName%></p>-->
+        <!--<P><b>Last Name: </b> </h4>      <p><%= user.lastName%></p>-->
+        <!--<p><b>Email: </b>   </h4>        <p><%= user.email%></p>-->
+    <!--</div>-->
+<!--</div>-->
 <% include ./partials/footer %>
