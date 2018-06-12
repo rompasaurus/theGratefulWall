@@ -44,7 +44,7 @@ var UserSchema = new mongoose.Schema({
             date: {type: Date, default: Date.now}
         }
     ],
-    downVotedComment:[
+    downvotedComment:[
         {
             id:{
                 type: mongoose.Schema.Types.ObjectId,

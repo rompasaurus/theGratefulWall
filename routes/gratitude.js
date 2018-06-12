@@ -23,15 +23,38 @@ router.post("/",isLoggedIn, function(req,res){
 });
 //upvote a gratitude
 router.post("/upvote/:id",isLoggedIn, function(req, res) {
-    Gratitude.findById(req.params.id, function(err, foundGratitude){
-        if(err){
+    Gratitude.findById(req.params.id, function(err, foundGratitude) {
+        if (err) {
             console.log("cant find post to upvote");
-        }else{
-            foundGratitude.upvote++;
-            foundGratitude.lastVote = new Date();
-            console.log("downvoted post" + foundGratitude);
-            foundGratitude.save();
-            res.redirect('back');
+        } else {
+            User.findById(req.user._id, function (err, foundUser) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    //checks if logged in user already voted
+                    var voteCheck = false;
+                    foundUser.upvotedGratitude.forEach(function(value){
+                        if(String(value._id)==String(foundGratitude._id)){
+                            voteCheck = true;
+                        }
+                    })
+                    if (!voteCheck){
+                        foundUser.upvotedGratitude.push(foundGratitude._id);
+                        foundGratitude.upvote++;
+                        foundGratitude.lastVote = new Date();
+                        foundGratitude.save();
+                        foundUser.save();
+                        res.redirect('back');
+                    }else{
+                        foundUser.upvotedGratitude.pop(foundGratitude._id);
+                        foundGratitude.upvote--;
+                        foundGratitude.lastVote = new Date();
+                        foundGratitude.save();
+                        foundUser.save();
+                        res.redirect('back');
+                    }
+                }
+            })
         }
     })
 });
@@ -40,12 +63,35 @@ router.post("/downvote/:id",isLoggedIn, function(req, res) {
     Gratitude.findById(req.params.id, function(err, foundGratitude){
         if(err){
             console.log("cant find post to upvote");
-        }else{
-            foundGratitude.downvote++;
-            foundGratitude.lastVote = new Date();
-            console.log("downvoted post" + foundGratitude);
-            foundGratitude.save();
-            res.redirect('back');
+        }else {
+            User.findById(req.user._id, function (err, foundUser) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    //Checks is user already voted removes or adds accordingly
+                    var voteCheck = false;
+                    foundUser.downvotedGratitude.forEach(function(value){
+                        if(String(value._id)==String(foundGratitude._id)){
+                            voteCheck = true;
+                        }
+                    })
+                    if (!voteCheck){
+                        foundUser.downvotedGratitude.push(foundGratitude.id);
+                        foundGratitude.downvote++;
+                        foundGratitude.lastVote = new Date();
+                        foundGratitude.save();
+                        foundUser.save();
+                        res.redirect('back');
+                    }else{
+                        foundUser.downvotedGratitude.pop(foundGratitude.id);
+                        foundGratitude.downvote--;
+                        foundGratitude.lastVote = new Date();
+                        foundGratitude.save();
+                        foundUser.save();
+                        res.redirect('back');
+                    }
+                }
+            })
         }
     })
 });
@@ -116,7 +162,7 @@ function isLoggedIn(req, res, next){
         return next()
     }
     console.log("something went terribly wrong");
-    res.redirect("login")
+    res.redirect("/login")
 }
 
 module.exports = router;
