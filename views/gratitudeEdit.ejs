@@ -1,0 +1,20 @@
+<% include ./partials/headerLoggedIn.ejs %>
+
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit Gratitude</div>
+    <form class="ui form" action="/gratitude/<%=gratitude._id%>?_method=PUT" method="POST">
+        <div class="field">
+            <label>"I am grateful for...</label>
+            <textarea name="description"><%= gratitude.description %></textarea>
+        </div>
+        <!--<div class="field">-->
+            <!--<label>Name</label>-->
+            <!--<input type="text" name="gratitude[name]" placeholder="name">-->
+        <!--</div>-->
+        <div class="field">
+            <button class="ui button big" type="submit">Submit Changes</button>
+        </div>
+    </form>
+</div>
+
+<% include ./partials/footer %>

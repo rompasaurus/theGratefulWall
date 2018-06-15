@@ -14,6 +14,7 @@ var bodyParser  = require("body-parser"),
     LocalStrategy = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose"),
     Gratitude   = require("./models/gratitudeSchema");
+    methodOverride = require("method-override")
 
 //import routes
 var auth = require("./routes/auth"),
@@ -36,6 +37,8 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+//initializes method overide to allow for put and delete requests
+app.use(methodOverride("_method"));
 //initilize User as auth db and establishes encryption serialization methods
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -48,6 +51,11 @@ function isLoggedIn(req, res, next){
     console.log("something went terribly wrong");
     res.redirect("login")
 }
+app.use(function(req,res,next) {
+    res.locals.currentUser=req.user;
+    next();
+})
+
 //Initialize routes
 app.use(auth);
 app.use(gratitude);

@@ -4,6 +4,8 @@ var express = require("express"),
     passport =  require("passport"),
     User = require("../models/user")
     router = express.Router();
+
+//app.use(methodOverride("_method"));
 //Adds gratitude submitted via new form page
 router.post("/",isLoggedIn, function(req,res){
     var gratitude={
@@ -42,17 +44,14 @@ router.post("/upvote/:id",isLoggedIn, function(req, res) {
                         foundUser.upvotedGratitude.push(foundGratitude._id);
                         foundGratitude.upvote++;
                         foundGratitude.lastVote = new Date();
-                        foundGratitude.save();
-                        foundUser.save();
-                        res.redirect('back');
                     }else{
                         foundUser.upvotedGratitude.pop(foundGratitude._id);
                         foundGratitude.upvote--;
                         foundGratitude.lastVote = new Date();
-                        foundGratitude.save();
-                        foundUser.save();
-                        res.redirect('back');
                     }
+                    foundGratitude.save();
+                    foundUser.save();
+                    res.redirect('back');
                 }
             })
         }
@@ -79,17 +78,14 @@ router.post("/downvote/:id",isLoggedIn, function(req, res) {
                         foundUser.downvotedGratitude.push(foundGratitude.id);
                         foundGratitude.downvote++;
                         foundGratitude.lastVote = new Date();
-                        foundGratitude.save();
-                        foundUser.save();
-                        res.redirect('back');
                     }else{
                         foundUser.downvotedGratitude.pop(foundGratitude.id);
                         foundGratitude.downvote--;
                         foundGratitude.lastVote = new Date();
-                        foundGratitude.save();
-                        foundUser.save();
-                        res.redirect('back');
                     }
+                    foundGratitude.save();
+                    foundUser.save();
+                    res.redirect('back');
                 }
             })
         }
@@ -104,7 +100,7 @@ router.get("/gratitude/:id", function(req, res) {
         }else {
 
             var commentDescriptions = [];
-            console.log(foundGratitude)
+            //console.log(foundGratitude)
             res.render("showGratitude", {
                 gratitude: foundGratitude,
                 isLoggedIn: isLoggedIn
@@ -120,6 +116,7 @@ router.get("/gratitude/:id", function(req, res) {
     //     comments.push(description.comment)
     // })
     // res.render("showGratitude", {gratitude:foundGratitude,isLoggedIn:isLoggedIn,comments:commentDescriptions})
+
 //post gratitude comment
 router.post("/gratitude/:id",isLoggedIn, function(req, res) {
     var comment = {
@@ -156,6 +153,44 @@ router.post("/gratitude/:id",isLoggedIn, function(req, res) {
         }
     })
 })
+// Edit Route
+//Edit form request
+router.get("/gratitude/:id/edit", function(req, res) {
+    Gratitude.findById(req.params.id, function (err, foundGratitude) {
+        if (err) {
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.render("gratitudeEdit",{gratitude:foundGratitude});
+        }
+    });
+})
+
+// Edit a gratitude
+router.put("/gratitude/:id", checkGratitudeOwnership, function(req, res) {
+    var gratitudeU= {
+        description: req.body.description
+    }
+    Gratitude.findByIdAndUpdate(req.params.id,gratitudeU,function(err,updatedGratitude){
+        if(err) {
+            console.log(err);
+            res.redirect("back");
+        }else{
+            res.redirect("/gratitude/"+updatedGratitude._id);
+        }
+    })
+})
+//DELETE ROUTE
+router.delete("/gratitude/:id", checkGratitudeOwnership, function(req,res){
+    Gratitude.findByIdAndRemove(req.params.id,function(err){
+        if(err) {
+            console.log(err);
+            //res.redirect("back");
+        }else{
+            res.redirect("/");
+        }
+    })
+})
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
@@ -165,4 +200,19 @@ function isLoggedIn(req, res, next){
     res.redirect("/login")
 }
 
+function checkGratitudeOwnership(req,res,next){
+    if(req.isAuthenticated()){
+        Gratitude.findById(req.params.id, function(err,foundGratitude) {
+            if(err) {
+                res.redirect("back");
+            }else {
+                if(foundGratitude.name.id.equals(req.user._id)) {
+                    next();
+                }else {
+                    res.redirect("back");
+                }
+            }
+        })
+    }
+}
 module.exports = router;

@@ -2,7 +2,8 @@
 <% include ./partials/headerLoggedIn %>
 <% }if(!isLoggedIn){%>
 <% include ./partials/header %>
-<%}%>    <div class="ui equal width center aligned padded grid">
+<%}%>
+<div class="ui equal width center aligned padded grid">
         <div class="column">
             <h2>Comments</h2>
         </div>
@@ -12,6 +13,7 @@
                     <h3>"I am grateful for <%=gratitude.description %>"</h3>
                     <p><%=gratitude.name.username %></p>
                     <p><%=gratitude.created.toLocaleDateString();%></p>
+            </form>
         </div>
             <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
                 <div class="ui two attached top  buttons  ">
@@ -19,6 +21,8 @@
                     <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
                 </div>
             </form>
+        <% include ./partials/editButtons %>
+
         <% if(gratitude.comments.length == 0){ %>
         <h4 class="ui horizontal divider header">
             No Comments

@@ -1,0 +1,8 @@
+<% if(currentUser && gratitude.name.id.equals(currentUser._id)){ %>
+<form class="ui form" action="/gratitude/<%=gratitude._id%>/edit" method="GET">
+    <div class="ui two attached buttons  ">
+        <button class="ui button black">Edit</button>
+        <button class="ui button red" formaction="/gratitude/<%=gratitude._id%>?_method=delete">Delete</button>
+    </div>
+</form>
+<% } %>
