@@ -26,9 +26,6 @@ router.get('/',function(req,res){
         }
     })
 });
-router.get("/user",isLoggedIn, function(req,res){
-    res.render("user")
-})
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

@@ -1,69 +1,34 @@
 <% include ./partials/headerLoggedIn.ejs %>
-<% if(isLoggedIn){%>
-<!--<P><%= user %></P>-->
+<% if(currentUser){%>
+<!--<P><%= currentUser %></P>-->
 <% } %>
 <div class="ui equal width center aligned padded grid">
     <div class="column">
-        <h2><%= user.username %></h2>
+        <h2><%= currentUser.username %></h2>
         <a href="/logout"><p>logout</p></a>
     </div>
 </div>
+
 <div class="ui secondary pointing six item stackable menu">
-    <a class="active item" href="/sort/today">Details</a>
-    <a class="item" href="/sort/dateAscend">Gratitudes</a>
-    <a class="item" href="/sort/dateDescend">Comments</a>
-    <a class="item" href="/sort/upvote">Upvoted</a>
-    <a class="item" href="/sort/popular">Favorites</a>
+    <a class="<%=sortingActiveItem.details %>" href="/user/sort/details">Details</a>
+    <a class="<%=sortingActiveItem.gratitudes %>" href="/user/sort/gratitudes">Gratitudes</a>
+    <a class="<%=sortingActiveItem.comments %>" href="/user/sort/comments">Comments</a>
+    <a class="<%=sortingActiveItem.upvoted %>" href="/user/sort/upvoted">Upvoted</a>
+    <a class="<%=sortingActiveItem.favorites %>" href="/user/sort/favorites">Favorites</a>
 </div>
-<h3 class="ui center aligned header">User Details</h3>
-<div class="ui four column doubling grid">
-    <div class="column">
-        <div class="ui  aligned container">
-            <h4><b>Username: </b></h4>
-        </div>
-    </div>
-    <div class="column right">
-        <div class="ui right aligned container">
-            <p><%= user.username%></p>
-        </div>
-    </div>
-    <div class="column">
-        <div class="ui aligned container">
-            <h4><b>Email: </b> </h4>
-        </div>
-    </div>
-    <div class="column">
-        <div class="ui right aligned container">
-            <p><%= user.email%></p>
-        </div>
-    </div>
-    <div class="column">
-        <div class="ui aligned container">
-            <h4><b>First Name: </b> </h4>
-        </div>
-    </div>
-    <div class="column">
-        <div class="ui right aligned container">
-            <p><%= user.firstName%></p>
-        </div>
-    </div>
-    <div class="column">
-        <div class="ui aligned container">
-            <h4><b>Last Name: </b></h4>
-        </div>
-    </div>
-    <div class="column right">
-        <div class="ui right aligned container">
-            <p><%= user.lastName%></p>
-        </div>
-    </div>
-</div>
-<!--<div class="ui equal width center left aligned padded grid">-->
-    <!--<div class="column">-->
-        <!--<h4><b>Username: </b></h4><p class="center"><%= user.username%></p>-->
-        <!--<h4><b>First Name: </b></h4>     <p><%= user.firstName%></p>-->
-        <!--<P><b>Last Name: </b> </h4>      <p><%= user.lastName%></p>-->
-        <!--<p><b>Email: </b>   </h4>        <p><%= user.email%></p>-->
-    <!--</div>-->
-<!--</div>-->
+<%if(sortingActiveItem.details == "active item"){%>
+<% include ./partials/user/details %>
+<%}%>
+<%if(sortingActiveItem.gratitudes == "active item"){%>
+<% include ./partials/user/submittedGratitudes %>
+<%}%>
+<%if(sortingActiveItem.comments == "active item"){%>
+<% include ./partials/user/submittedComments %>
+<%}%>
+<%if(sortingActiveItem.upvoted == "active item"){%>
+<% include ./partials/user/upvoted %>
+<%}%>
+<%if(sortingActiveItem.favorites == "active item"){%>
+<% include ./partials/user/favorites %>
+<%}%>
 <% include ./partials/footer %>

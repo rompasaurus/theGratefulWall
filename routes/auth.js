@@ -45,9 +45,6 @@ router.get("/logout", function(req,res){
     res.redirect("/")
 });
 
-router.get("/user",isLoggedIn, function (req,res) {
-    res.render('user',{user:req.user,isLoggedIn:isLoggedIn});
-})
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

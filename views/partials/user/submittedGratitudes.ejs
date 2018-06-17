@@ -1,4 +1,6 @@
-<% gratitudes.forEach(function(gratitude){%>
+<h3 class="ui center aligned header">Submitted Gratitudes</h3>
+<!--<p><%= userGrat.submittedGratitude%></p>-->
+<% userGrat.submittedGratitude.forEach(function(gratitude){%>
     <% if(gratitude!=null){%>
     <div class="ui container center aligned padded text ">
         <div class="ui text padded center segment attached">
@@ -9,7 +11,7 @@
                     <p><%=gratitude.created.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });%></p>
                 </button>
             </form>
-            <% include editButtons %>
+            <% include ../editButtons %>
 
         </div>
         <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
@@ -20,3 +22,8 @@
             </form>
     </div>
 <% }}); %>
+<% if(userGrat.submittedGratitude.length==0){%>
+<p class="ui horizontal divider ">
+    No Submitted Gratitudes
+</p>
+<%}%>

@@ -10,73 +10,57 @@ var UserSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     submittedComment:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Comment"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment",
             date: {type: Date, default: Date.now}
         }
     ] ,
     submittedGratitude:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Comment"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Gratitude",
             date: {type: Date, default: Date.now}
         }
     ] ,
     favoriteComment:[
         {
-            id:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
-            },
+            ref: "Comment",
             date: {type: Date, default: Date.now}
         }
     ] ,
     upvotedComment:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Comment"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment",
             date: {type: Date, default: Date.now}
         }
     ],
     downvotedComment:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Comment"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment",
             date: {type: Date, default: Date.now}
         }
     ],
     favoriteGratitude:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Gratitude"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Gratitude",
             date: {type: Date, default: Date.now}
         }
     ] ,
     upvotedGratitude:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Gratitude"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Gratitude",
             date: {type: Date, default: Date.now}
         }
     ],
     downvotedGratitude:[
         {
-            id:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Gratitude"
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Gratitude",
             date: {type: Date, default: Date.now}
         }
     ]

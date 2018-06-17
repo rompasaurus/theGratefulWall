@@ -21,6 +21,7 @@ var auth = require("./routes/auth"),
     gratitude = require("./routes/gratitude"),
     landing = require("./routes/landing"),
     sorted = require("./routes/sorted");
+    user = require("./routes/user");
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
 mongoose.connect("mongodb://tgw:tgwauth123@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2");
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
@@ -61,6 +62,7 @@ app.use(auth);
 app.use(gratitude);
 app.use(sorted);
 app.use(landing);
+app.use(user);
 
 ///uncomment to use as app on heroku
 app.listen(process.env.PORT, process.env.IP, function(){

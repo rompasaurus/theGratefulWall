@@ -15,11 +15,20 @@ router.post("/",isLoggedIn, function(req,res){
             username: req.user.username
         }
     }
+    // Create gratitude and associate id to user
     Gratitude.create(gratitude, function(err,newGratitude){
         if(err){
             res.render("new");
         }else{
-            res.redirect("/");
+            User.findById(req.user._id, function (err, foundUser) {
+                if(err) {
+                    console.log(err)
+                }else{
+                    foundUser.submittedGratitude.push(newGratitude._id)
+                    foundUser.save()
+                    res.redirect("/");
+                }
+            })
         }
     });
 });
@@ -126,7 +135,7 @@ router.post("/gratitude/:id",isLoggedIn, function(req, res) {
             username: req.user.username
         }
     }
-
+//creates comment and associates id to the user
     Comment.create(comment, function(err, newComment) {
         if (err) {
             console.log("cannot add comment")

@@ -1,0 +1,12 @@
+<h3 class="ui center aligned header">Submitted Comments</h3>
+<!--<p><%= userGrat.submittedComment%></p>-->
+<% userGrat.submittedComment.forEach(function(comment){ %>
+<div class="ui container center aligned padded text segment ">
+    <p><%=comment.comment %></p>
+</div>
+<% }); %>
+<% if(userGrat.submittedComment.length==0){%>
+<p class="ui horizontal divider ">
+    No Submitted Comments
+</p>
+<%}%>

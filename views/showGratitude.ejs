@@ -21,7 +21,7 @@
                     <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
                 </div>
             </form>
-        <% include ./partials/editButtons %>
+        <% include partials/editButtons %>
 
         <% if(gratitude.comments.length == 0){ %>
         <h4 class="ui horizontal divider header">
