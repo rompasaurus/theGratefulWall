@@ -1,44 +1,32 @@
-<%if(isLoggedIn){ %>
-<% include ./partials/headerLoggedIn %>
-<% }if(!isLoggedIn){%>
-<% include ./partials/header %>
+<%if(currentUser){ %>
+<% include partials/headerLoggedIn %>
+<% }if(!currentUser){%>
+<% include partials/header %>
 <%}%>
 <div class="ui equal width center aligned padded grid">
-        <div class="column">
-            <h2>Comments</h2>
-        </div>
+    <div class="column">
+        <h2>Comments</h2>
     </div>
-    <div class="ui container center aligned text ">
-        <div class="ui text center segment attached">
-                    <h3>"I am grateful for <%=gratitude.description %>"</h3>
-                    <p><%=gratitude.name.username %></p>
-                    <p><%=gratitude.created.toLocaleDateString();%></p>
-            </form>
-        </div>
-            <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
-                <div class="ui two attached top  buttons  ">
-                    <button class="ui button"><i class="thumbs up outline icon"></i>       <%= gratitude.upvote %>     </button>
-                    <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
-                </div>
-            </form>
-        <% include partials/editButtons %>
-
-        <% if(gratitude.comments.length == 0){ %>
-        <h4 class="ui horizontal divider header">
-            No Comments
-        </h4>
-        <% }else{ %>
+</div>
+<div class="ui container center aligned text ">
+    <div class="ui text center segment attached">
+        <h3>"I am grateful for <%=gratitude.description %>"</h3>
+        <p><em><%=gratitude.name.username %></em></p>
+        <p><%=gratitude.created.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });%></p>
+        </form>
     </div>
-    <% gratitude.comments.forEach(function(comment){ %>
-        <div class="ui container center aligned padded text segment ">
-                <p><%=comment.comment %></p>
-        </div>
-    <% })}; %>
+    <% include partials/editButtons %>
 
+    <% if(gratitude.comments.length == 0){ %>
+    <h4 class="ui horizontal divider header">No Comments</h4>
+    <% }else{ %>
+    <% include partials/comments %>
+    <%}%>
+</div>
 
-<%if(isLoggedIn){ %>
+<%if(currentUser){ %>
 <% include partials/addCommentForm%>
-<% }if(!isLoggedIn){%>
+<% }if(!currentUser){%>
 <div class="ui container center aligned text ">
     <p>login or register to post comments</p>
     <p><a href="/login">Login</a></p>

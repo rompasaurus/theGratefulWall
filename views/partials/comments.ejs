@@ -1,0 +1,24 @@
+<% gratitude.comments.forEach(function(comment){ %>
+<div class="ui container center aligned text ">
+    <div class="ui text center segment attached">
+        <div class="ui grid">
+            <div class="three wide column"><em><%=comment.created.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });%></em></p>
+            </div>
+            <div class="ten wide column"><p><%=comment.comment %></p></div>
+            <div class="three wide column"><p><em><%=comment.name.username%></em></p></div>
+        <!--<p><%=comment.comment %> - <%=comment.name.username%> </p>-->
+        <!--&lt;!&ndash;<p><%=comment.name.username%></p>&ndash;&gt;-->
+        </div>
+    </div>
+    <form class="ui form" action="/comment/upvote/<%=comment._id%>" method="POST">
+        <div class="ui four attached white bottom mini buttons  ">
+            <button class="ui button"><i class="thumbs up outline icon"></i> <%= comment.upvote %></button>
+            <% if(currentUser && comment.name.id.equals(currentUser._id)){ %>
+            <button class="ui button "formaction="/comment/<%=comment._id%>/edit?_method=get">Edit</button>
+            <button class="ui button " formaction="/comment/<%=comment._id%>?_method=delete" >Delete</button>
+            <% } %>
+            <button class="ui button" formaction="/comment/downvote/<%=comment._id%>"><i class="thumbs down outline icon"></i>     <%= comment.downvote %>   </button>
+        </div>
+    </form>
+</div>
+<% }); %>

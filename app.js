@@ -13,8 +13,8 @@ var bodyParser  = require("body-parser"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose"),
-    Gratitude   = require("./models/gratitudeSchema");
-    methodOverride = require("method-override")
+    Gratitude   = require("./models/gratitudeSchema"),
+    methodOverride = require("method-override");
 
 //import routes
 var auth = require("./routes/auth"),
@@ -22,6 +22,7 @@ var auth = require("./routes/auth"),
     landing = require("./routes/landing"),
     sorted = require("./routes/sorted");
     user = require("./routes/user");
+    comment = require("./routes/comment");
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
 mongoose.connect("mongodb://tgw:tgwauth123@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2");
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
@@ -63,6 +64,7 @@ app.use(gratitude);
 app.use(sorted);
 app.use(landing);
 app.use(user);
+app.use(comment);
 
 ///uncomment to use as app on heroku
 app.listen(process.env.PORT, process.env.IP, function(){

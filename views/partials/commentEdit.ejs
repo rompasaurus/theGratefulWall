@@ -1,0 +1,16 @@
+<% include headerLoggedIn %>
+
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit Comment</div>
+    <form class="ui form" action="/comment/<%=comment._id%>" method="POST">
+        <div class="field">
+            <textarea name="description"><%= comment.comment %></textarea>
+        </div>
+        <div class="field">
+            <button class="ui button big" type="submit">Submit Changes</button>
+        </div>
+
+    </form>
+</div>
+
+<% include footer %>

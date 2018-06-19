@@ -3,9 +3,11 @@ var express = require("express"),
     Comment = require("../models/commentSchema"),
     passport =  require("passport"),
     User = require("../models/user")
+    methodOverride = require("method-override"),
+        app = express();
     router = express.Router();
 
-//app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));
 //Adds gratitude submitted via new form page
 router.post("/",isLoggedIn, function(req,res){
     var gratitude={
@@ -126,42 +128,7 @@ router.get("/gratitude/:id", function(req, res) {
     // })
     // res.render("showGratitude", {gratitude:foundGratitude,isLoggedIn:isLoggedIn,comments:commentDescriptions})
 
-//post gratitude comment
-router.post("/gratitude/:id",isLoggedIn, function(req, res) {
-    var comment = {
-        comment:req.body.gratitude.comments,
-        name : {
-            id: req.user._id,
-            username: req.user.username
-        }
-    }
-//creates comment and associates id to the user
-    Comment.create(comment, function(err, newComment) {
-        if (err) {
-            console.log("cannot add comment")
-        } else {
-            User.findById(req.user._id, function(err, foundUser){
-              if(err){
-                  console.log(err);
-              }else{
-                  foundUser.submittedComment.push(newComment._id);
-                  foundUser.save();
-                  console.log("associated comment to "+ foundUser.username)
-              }
-            })
-            Gratitude.findById(req.params.id, function (err, foundGratitude) {
-                if (err) {
-                    console("aint no gratitude information")
-                } else {
-                    foundGratitude.comments.push(newComment._id);
-                    foundGratitude.save();
-                    console.log("added comment to " + foundGratitude);
-                    res.redirect('back');
-                }
-            })
-        }
-    })
-})
+
 // Edit Route
 //Edit form request
 router.get("/gratitude/:id/edit", function(req, res) {
