@@ -3,11 +3,6 @@
 <% }if(!currentUser){%>
 <% include partials/header %>
 <%}%>
-<div class="ui equal width center aligned padded grid">
-    <div class="column">
-        <h2>Comments</h2>
-    </div>
-</div>
 <div class="ui container center aligned text ">
     <div class="ui text center segment attached">
         <h3>"I am grateful for <%=gratitude.description %>"</h3>
@@ -17,6 +12,11 @@
     </div>
     <% include partials/editButtons %>
 
+<div class="ui equal width center aligned padded grid">
+    <div class="column">
+        <h2 class="ui horizontal divider header">Comments</h2>
+    </div>
+</div>
     <% if(gratitude.comments.length == 0){ %>
     <h4 class="ui horizontal divider header">No Comments</h4>
     <% }else{ %>

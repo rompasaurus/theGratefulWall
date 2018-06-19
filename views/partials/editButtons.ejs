@@ -1,10 +1,10 @@
-<% if(currentUser && gratitude.name.id.equals(currentUser._id)){ %>
 <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
     <div class="ui four attached top  buttons  ">
         <button class="ui button"><i class="thumbs up outline icon"></i>       <%= gratitude.upvote %>     </button>
+<% if(currentUser && gratitude.name.id.equals(currentUser._id)){ %>
         <button class="ui button "formaction="/gratitude/<%=gratitude._id%>/edit?_method=get">Edit</button>
         <button class="ui button "formaction="/gratitude/<%=gratitude._id%>?_method=delete">Delete</button>
+<% } %>
         <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
     </div>
 </form>
-<% } %>
