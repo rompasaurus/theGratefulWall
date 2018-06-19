@@ -15,7 +15,8 @@ var bodyParser  = require("body-parser"),
     passportLocalMongoose = require("passport-local-mongoose"),
     Gratitude   = require("./models/gratitudeSchema"),
     methodOverride = require("method-override");
-
+    //seedDB = require("./seed");
+// seedDB();
 //import routes
 var auth = require("./routes/auth"),
     gratitude = require("./routes/gratitude"),

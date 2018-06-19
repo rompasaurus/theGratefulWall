@@ -5,3 +5,17 @@
     No Favorites
 </p>
 <%}%>
+<% userGrat.favoriteGratitude.forEach(function(comment){ %>
+<div class="ui container center aligned padded text ">
+    <div class="ui text padded center segment attached">
+        <form class="ui form" action="/gratitude/<%=gratitude._id%>" method="GET">
+            <button class="ui button fluid" style=" background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                <h3>"I am grateful for <%=gratitude.description %>"</h3>
+                <p><em><%=gratitude.name.username %></em></p>
+                <p><%=gratitude.created.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });%></p>
+            </button>
+        </form>
+    </div>
+    <% include ../editButtons %>
+</div>
+<% }); %>

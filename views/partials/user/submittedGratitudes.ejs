@@ -7,19 +7,12 @@
             <form class="ui form" action="/gratitude/<%=gratitude._id%>" method="GET">
                 <button class="ui button fluid" style=" background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
                     <h3>"I am grateful for <%=gratitude.description %>"</h3>
-                    <p><%=gratitude.name.username%></p>
+                    <p><em><%=gratitude.name.username %></em></p>
                     <p><%=gratitude.created.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });%></p>
                 </button>
             </form>
-            <% include ../editButtons %>
-
         </div>
-        <form class="ui form" action="/upvote/<%=gratitude._id%>" method="POST">
-                <div class="ui two attached bottom  buttons  ">
-                    <button class="ui button"><i class="thumbs up outline icon"></i>       <%= gratitude.upvote %>     </button>
-                    <button class="ui button" formaction="/downvote/<%=gratitude._id%>"><i class="thumbs down outline icon"></i>     <%= gratitude.downvote %>   </button>
-                </div>
-            </form>
+            <% include ../editButtons %>
     </div>
 <% }}); %>
 <% if(userGrat.submittedGratitude.length==0){%>
