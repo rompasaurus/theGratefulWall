@@ -3,7 +3,11 @@ var express = require("express"),
     passport =  require("passport"),
     router = express.Router();
 //Sorted Views
-router.get("/sort/:id", function(req, res) {
+router.get("/sort/:id&:page", function(req, res, next) {
+    var perPage = 5;
+    var page = req.params.page;
+    //var pages = Math.ceil(gratitude.length/perPage)
+    var id = req.params.id;
     var      sortingActiveItem={
         today:"item",
         dateA:"item",
@@ -17,62 +21,110 @@ router.get("/sort/:id", function(req, res) {
     switch(req.params.id){
         case "dateDescend":
             sortingActiveItem.dateD = "active item"
-            Gratitude.find({}).sort({ created: 'desc' }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("descension failed")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes by Date Descending", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ created: 'desc' }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                    Gratitude.count().exec(function(err, count) {
+                        if (err) return next(err)
+                        res.render('sorted', {
+                            gratitudes: gratitudes,
+                            title: "Gratitudes by Date Descending",
+                            sortingActiveItem: sortingActiveItem,
+                            isLoggedIn: isLoggedIn,
+                            current: page,
+                            pages: Math.ceil(count / perPage),
+                            id: id
+                        })
+                });
             });
             break;
         case "dateAscend":
             sortingActiveItem.dateA = "active item"
-            Gratitude.find({}).sort({ created: 'asc' }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("naw man")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Gratitudes By Date Ascending", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ created: 'asc' }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                Gratitude.count().exec(function(err, count) {
+                    if (err) return next(err)
+                    res.render('sorted', {
+                        gratitudes: gratitudes,
+                        title:"Gratitudes By Date Ascending",
+                        sortingActiveItem: sortingActiveItem,
+                        isLoggedIn: isLoggedIn,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        id: id
+                    })
+                });
             });
             break;
         case "downvote":
             sortingActiveItem.downvote = "active item"
-            Gratitude.find({}).sort({ downvote: -1  }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("naw man")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Downvoted Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ downvote: -1 }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                Gratitude.count().exec(function(err, count) {
+                    if (err) return next(err)
+                    res.render('sorted', {
+                        gratitudes: gratitudes,
+                        title:"Most Downvoted Gratitudes",
+                        sortingActiveItem: sortingActiveItem,
+                        isLoggedIn: isLoggedIn,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        id: id
+                    })
+                });
             });
             break;
         case "upvote":
             sortingActiveItem.upvote = "active item"
-            Gratitude.find({}).sort({ upvote: -1 }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("naw man")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Upvoted Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ upvote: -1 }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                Gratitude.count().exec(function(err, count) {
+                    if (err) return next(err)
+                    res.render('sorted', {
+                        gratitudes: gratitudes,
+                        title:"Most Upvoted Gratitudes",
+                        sortingActiveItem: sortingActiveItem,
+                        isLoggedIn: isLoggedIn,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        id: id
+                    })
+                });
             });
             break;
         case "today":
             sortingActiveItem.today = "active item"
-            Gratitude.find({}).sort({ created: 'desc' }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("naw man")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Today's Top Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ created: 'desc' }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                Gratitude.count().exec(function(err, count) {
+                    if (err) return next(err)
+                    res.render('sorted', {
+                        gratitudes: gratitudes,
+                        title:"Today's Top Gratitudes",
+                        sortingActiveItem: sortingActiveItem,
+                        isLoggedIn: isLoggedIn,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        id: id
+                    })
+                });
             });
             break;
         case "popular":
             sortingActiveItem.popularity = "active item"
-            Gratitude.find({}).sort({ lastVote: -1, upvote: -1 }).exec(function(err,gratitudes){
-                if(err){
-                    console.log("naw man")
-                }else{
-                    res.render('sorted',{gratitudes:gratitudes, title:"Most Popular Gratitudes", sortingActiveItem:sortingActiveItem,isLoggedIn:isLoggedIn})
-                }
+            Gratitude.find({}).sort({ lastVote: -1, upvote: -1 }).skip((perPage * page) - perPage)
+                .limit(perPage).exec(function(err,gratitudes){
+                Gratitude.count().exec(function(err, count) {
+                    if (err) return next(err)
+                    res.render('sorted', {
+                        gratitudes: gratitudes,
+                        title:"Most Popular Gratitudes",
+                        sortingActiveItem: sortingActiveItem,
+                        isLoggedIn: isLoggedIn,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        id: id
+                    })
+                });
             });
             break;
     }

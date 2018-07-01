@@ -22,7 +22,8 @@ router.get('/',function(req,res){
         if(err){
             console.log("we aint found shit in no db");
         }else{
-            res.render('landing',{gratitudes:gratitudes,title:"Today's Top Gratitudes",isLoggedIn:isLoggedIn});
+            res.redirect("/sort/today&1")
+            //res.render('landing',{gratitudes:gratitudes,title:"Today's Top Gratitudes",isLoggedIn:isLoggedIn});
         }
     })
 });
