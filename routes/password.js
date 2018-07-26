@@ -134,7 +134,7 @@ router.post("/reset/:token", (req, res) => {
     },
 ], err => {
     if (err) throw err;
-res.redirect("/campgrounds");
+res.redirect("login");
 });
 });
 
