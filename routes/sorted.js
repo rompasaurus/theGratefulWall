@@ -23,7 +23,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.dateD = "active item"
             Gratitude.find({}).sort({ created: 'desc' }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                    Gratitude.count().exec(function(err, count) {
+                    Gratitude.countDocuments().exec(function(err, count) {
                         if (err) return next(err)
                         res.render('sorted', {
                             gratitudes: gratitudes,
@@ -41,7 +41,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.dateA = "active item"
             Gratitude.find({}).sort({ created: 'asc' }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                Gratitude.count().exec(function(err, count) {
+                Gratitude.countDocuments().exec(function(err, count) {
                     if (err) return next(err)
                     res.render('sorted', {
                         gratitudes: gratitudes,
@@ -59,7 +59,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.downvote = "active item"
             Gratitude.find({}).sort({ downvote: -1 }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                Gratitude.count().exec(function(err, count) {
+                Gratitude.countDocuments().exec(function(err, count) {
                     if (err) return next(err)
                     res.render('sorted', {
                         gratitudes: gratitudes,
@@ -77,7 +77,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.upvote = "active item"
             Gratitude.find({}).sort({ upvote: -1 }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                Gratitude.count().exec(function(err, count) {
+                Gratitude.countDocuments().exec(function(err, count) {
                     if (err) return next(err)
                     res.render('sorted', {
                         gratitudes: gratitudes,
@@ -95,7 +95,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.today = "active item"
             Gratitude.find({}).sort({ created: 'desc' }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                Gratitude.count().exec(function(err, count) {
+                Gratitude.countDocuments().exec(function(err, count) {
                     if (err) return next(err)
                     res.render('sorted', {
                         gratitudes: gratitudes,
@@ -113,7 +113,7 @@ router.get("/sort/:id&:page", function(req, res, next) {
             sortingActiveItem.popularity = "active item"
             Gratitude.find({}).sort({ lastVote: -1, upvote: -1 }).skip((perPage * page) - perPage)
                 .limit(perPage).exec(function(err,gratitudes){
-                Gratitude.count().exec(function(err, count) {
+                Gratitude.countDocuments().exec(function(err, count) {
                     if (err) return next(err)
                     res.render('sorted', {
                         gratitudes: gratitudes,
