@@ -4,7 +4,7 @@ var express = require("express"),
     router = express.Router();
 //Sorted Views
 router.get("/sort/:id&:page", function(req, res, next) {
-    var perPage = 5;
+    var perPage = 10;
     var page = req.params.page;
     //var pages = Math.ceil(gratitude.length/perPage)
     var id = req.params.id;
