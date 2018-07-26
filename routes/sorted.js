@@ -135,7 +135,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next()
     }
-    console.log("something went terribly wrong");
+    console.log("something went terribly wrong ");
     res.redirect("login")
 }
 
