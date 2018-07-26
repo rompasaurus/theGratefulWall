@@ -16,9 +16,9 @@ var bodyParser  = require("body-parser"),
     Gratitude   = require("./models/gratitudeSchema"),
     methodOverride = require("method-override");
     //seedDB = require("./seed");
+    flash       = require("connect-flash");
 // seedDB();
 //import routes
-var flash=require("connect-flash");
 app.use(flash());
 var auth = require("./routes/auth"),
     gratitude = require("./routes/gratitude"),
@@ -28,7 +28,7 @@ var auth = require("./routes/auth"),
     comment = require("./routes/comment");
     password = require("./routes/password");
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
-mongoose.connect("mongodb://tgw:tgwauth123@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2");
+mongoose.connect("mongodb://tgw:tgwauth123@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2", { useNewUrlParser: true });
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
 app.set("view engine", "ejs");
 //establishes the public folder as a root folder this will contain css stylesheets
@@ -72,7 +72,7 @@ app.use(comment);
 app.use(password);
 
 ///uncomment to use as app on heroku
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(process.env.PORT||8080, process.env.IP, function(){
 //app.listen(8080, function(){
     console.log("Grateful wall has started and is listening on port " + process.env.PORT + "and IP " + process.env.IP);
 });
