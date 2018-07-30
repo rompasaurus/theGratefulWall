@@ -28,7 +28,7 @@ var auth = require("./routes/auth"),
     comment = require("./routes/comment");
     password = require("./routes/password");
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
-mongoose.connect("mongodb://tgw:tgwauth123@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2", { useNewUrlParser: true });
+mongoose.connect("mongodb://tgw:"+process.env.DPASS+"@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2", { useNewUrlParser: true });
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
 app.set("view engine", "ejs");
 //establishes the public folder as a root folder this will contain css stylesheets

@@ -40,7 +40,7 @@ router.post("/password_reset", (req, res, next) => {
             service: "Gmail",
             auth: {
                 user: "dookwhipsers@gmail.com",
-                pass: "dec231988"
+                pass: process.env.GPASS
             }
         });
         let mailOptions = {
@@ -114,7 +114,7 @@ router.post("/reset/:token", (req, res) => {
             service: "Gmail",
             auth: {
                 user: "dookwhipsers@gmail.com",
-                pass: "dec231988"
+                pass: process.env.GPASS
             }
         });
         let mailOptions = {
