@@ -2,7 +2,7 @@
 
 <div class="ui main text container segment">
     <div class="ui huge header">Login</div>
-    <form class="ui form" action="/login" method="POST">
+    <div class="ui form" action="/login" method="POST">
         <div class="field">
             <label>Username</label>
             <input type="text" name= "username" placeholder="username">
@@ -13,10 +13,10 @@
         </div>
         <div class="field">
             <button class="ui button big" type="submit">Submit</button>
-            
         </div>
-        <a href="/register">Register New Account</a>
-    </form>
+    </div>
+    <P></P><a  href="/register">Register New Account</a></P>
+    <P><a  href="/password_reset">Forgot password ?</a></P>
 </div>
 
 <% include partials/footer %>
