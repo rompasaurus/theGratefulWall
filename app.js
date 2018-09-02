@@ -37,7 +37,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(require("express-session")({
-    secret: "this website sucks",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
 }));
