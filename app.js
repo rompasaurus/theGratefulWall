@@ -17,9 +17,12 @@ var bodyParser  = require("body-parser"),
     methodOverride = require("method-override");
     seedDB = require("./seed");
     flash       = require("connect-flash");
+    dotenv      = require('dotenv');
 //seedDB();
 //import routes
 app.use(flash());
+//Make sure to place a .env in the root folder and apply all the values needed anywhere in the code with process.env ie
+dotenv.config();
 var auth = require("./routes/auth"),
     gratitude = require("./routes/gratitude"),
     landing = require("./routes/landing"),
@@ -31,6 +34,8 @@ var auth = require("./routes/auth"),
 //this string used connection env vars provided from the  herokus site need to set that up again
 //mongoose.connect("mongodb://tgw:"+process.env.DPASS+"@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2", { useNewUrlParser: true });
 mongoose.connect("mongodb+srv://TheGratefulWallClusterAdmin:Y05qmCkFQswyhVBF@thegratefulwallcluster.rtikqcl.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
+//mongoose.connect(process.env.MONGCONNECTIONSTRING, { useNewUrlParser: true });
+
 
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
 app.set("view engine", "ejs");
@@ -39,8 +44,6 @@ app.use(express.static("public"));
 //Boiler initializaes formats for bodyparser
 app.use(bodyParser.urlencoded({extended: true}));
 
-
-process.env.SECRET = "TGWSecret"
 app.use(require("express-session")({
     secret: process.env.SECRET,
     resave: false,
@@ -77,7 +80,7 @@ app.use(comment);
 app.use(password);
 
 ///uncomment to use as app on heroku
-//app.listen(process.env.PORT||8080, process.env.IP, function(){
-app.listen(8080, function(){
-    console.log("Grateful wall has started and is listening on port " + process.env.PORT + "and IP " + process.env.IP);
+app.listen(process.env.PORT||8080, process.env.IP, function(){
+//app.listen(8080, function(){
+    console.log("Grateful wall has started and is listening on port " + (process.env.PORT || "8080 ")+ "and IP " + process.env.IP);
 });
