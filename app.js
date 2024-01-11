@@ -21,6 +21,7 @@ var bodyParser  = require("body-parser"),
 //seedDB();
 //import routes
 app.use(flash());
+app.enable('trust proxy');
 //Make sure to place a .env in the root folder and apply all the values needed anywhere in the code with process.env ie
 dotenv.config();
 var auth = require("./routes/auth"),
@@ -57,16 +58,16 @@ app.use(methodOverride("_method"));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next()        
-    }
-    console.log("something went terribly wrong");
-    res.redirect("login")
-}
 app.use(function(req,res,next) {
     res.locals.currentUser=req.user;
+    next();
+})
+app.use(function(request, response, next) {
+
+    if (process.env.NODE_ENV != 'development' && !request.secure) {
+       return response.redirect("https://" + request.headers.host + request.url);
+    }
+
     next();
 })
 
