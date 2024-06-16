@@ -93,25 +93,25 @@ function seedDB(){
             console.log("removed comments!");
             User.remove({}, function(err){
             //add a few gratitudes and users
-            //     users.forEach(function(seed){
-            //         User.create(seed, function(err, Gratitudes){
-            //             if(err){
-            //                 console.log(err)
-            //             } else {
-            //                 console.log("added a user");
-            //             }
-            //         });
-            //         })
-            //     data.forEach(function(seed){
-            //         Gratitude.create(seed, function(err, Gratitudes){
-            //             if(err){
-            //                 console.log(err)
-            //             } else {
-            //                 console.log("added a Gratitude");
-            //             }
-            //         });
-            //      })
-            });
+                users.forEach(function(seed){
+                    User.create(seed, function(err, Gratitudes){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added a user");
+                        }
+                    });
+                    })
+                data.forEach(function(seed){
+                    Gratitude.create(seed, function(err, Gratitudes){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added a Gratitude");
+                        }
+                    });
+                    })
+                });
         });
     });
     //add a few comments

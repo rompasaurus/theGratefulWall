@@ -39,8 +39,8 @@ router.post("/password_reset", (req, res, next) => {
         let smtpTransport = nodemailer.createTransport({
             service: "Gmail",
             auth: {
-                user: "dookwhipsers@gmail.com",
-                pass: process.env.GPASS
+                user: process.env.MAILADDRESS,
+                pass: process.env.MAILADDRESSPASS
             }
         });
         let mailOptions = {
@@ -113,8 +113,8 @@ router.post("/reset/:token", (req, res) => {
         let smtpTransport = nodemailer.createTransport({
             service: "Gmail",
             auth: {
-                user: "dookwhipsers@gmail.com",
-                pass: process.env.GPASS
+                user:  process.env.MAILADDRESS,
+                pass: process.env.MAILADDRESSPASS
             }
         });
         let mailOptions = {

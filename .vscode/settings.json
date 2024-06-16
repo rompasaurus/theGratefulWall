@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3cd16c96-6f4a-4dc7-b0ac-113c1007808c/resourceGroups/TheGratefulWallNodeFrontEnd/providers/Microsoft.Web/sites/TheGratefulWallNodeFrontEnd",
+    "appService.deploySubpath": "."
+}

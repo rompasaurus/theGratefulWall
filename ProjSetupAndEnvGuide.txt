@@ -1,0 +1,13 @@
+When you pull a fresh copy of the code, the env var will not be set you will need to acquire the auth and port numbers or est them yourself 
+Values needed for env and example of how it should look 
+.env:
+    NODE_ENV=DEV
+    PORT=8080
+    DBPASS= 
+    MONGCONNECTIONSTRING= mongodb+srv://TheGratefulWallClusterAdmin:<password>@thegratefulwallcluster.rtikqcl.mongodb.net/
+    SECRET =
+    MAILADDRESS =example@gmail.com
+    MAILADDRESSPASS = 
+GITIGNORE YOUR ENV AS WELL FILE FFS
+
+To deploy to azure from vs code install the azure extensions
