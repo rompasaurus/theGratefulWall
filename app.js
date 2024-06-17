@@ -1,23 +1,23 @@
 //import and initialize npm frameworks 
 //Body parser allows for the parsing of crud commands pulling the body data of the url requested
-var bodyParser  = require("body-parser"),
+var bodyParser              = require("body-parser"),
     //mongoose interfaces with mongoDB and allows for schema creation and db manipulation
-    mongoose    = require("mongoose"),
+    mongoose                = require("mongoose"),
     //express handles the http server and requests via easy to use notation
-    express     = require("express"),
+    express                 = require("express"),
     //app initilizes the express frameworks and is the variable in which all express commands are acted upon
-    app         = express(),
+    app                     = express(),
     // user db and schema information
-    User        = require("./models/user"),
+    User                    = require("./models/user"),
     //authentication framework
-    passport    = require("passport"),
-    LocalStrategy = require("passport-local"),
-    passportLocalMongoose = require("passport-local-mongoose"),
-    Gratitude   = require("./models/gratitudeSchema"),
-    methodOverride = require("method-override");
-    seedDB = require("./seed");
-    flash       = require("connect-flash");
-    dotenv      = require('dotenv');
+    passport                = require("passport"),
+    LocalStrategy           = require("passport-local"),
+    passportLocalMongoose   = require("passport-local-mongoose"),
+    Gratitude               = require("./models/gratitudeSchema"),
+    methodOverride          = require("method-override");
+    seedDB                  = require("./seed");
+    flash                   = require("connect-flash");
+    dotenv                  = require('dotenv');
 //seedDB();
 //import routes
 app.use(flash());
@@ -34,8 +34,8 @@ var auth = require("./routes/auth"),
 //Connect to DB (DB exists locally for now) named the_grateful_wall_gratitudes if db non-existant it will be created
 //this string used connection env vars provided from the  herokus site need to set that up again
 //mongoose.connect("mongodb://tgw:"+process.env.DPASS+"@ds245150.mlab.com:45150/the_grateful_wall_gratitudes_v2", { useNewUrlParser: true });
-mongoose.connect("mongodb+srv://TheGratefulWallClusterAdmin:Y05qmCkFQswyhVBF@thegratefulwallcluster.rtikqcl.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
-//mongoose.connect(process.env.MONGCONNECTIONSTRING, { useNewUrlParser: true });
+//mongoose.connect("mongodb+srv://TheGratefulWallClusterAdmin:Y05qmCkFQswyhVBF@thegratefulwallcluster.rtikqcl.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGCONNECTIONSTRING, { useNewUrlParser: true, useUnifiedTopology: true});
 
 
 //establishes ejs as the primary format the will be used to present web data allowing the .ejs to be excluded when rendering
@@ -83,5 +83,5 @@ app.use(password);
 ///uncomment to use as app on heroku
 app.listen(process.env.PORT||8080, process.env.IP, function(){
 //app.listen(8080, function(){
-    console.log("Grateful wall has started and is listening on port " + (process.env.PORT || "8080 ")+ "and IP " + process.env.IP);
+    console.log("Grateful wall has started and is listening on port " + (process.env.PORT || "8080")+ " and IP: " + process.env.IP);
 });
