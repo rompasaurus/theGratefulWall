@@ -27,32 +27,32 @@
 <div class="ui equal width center aligned padded grid">
     <div class="column">
         <% if (pages > 0) { %>
-        <div class="ui pagination menu center aligned">
+            <div class="ui pagination menu center aligned">
             <% if (current == 1) { %>
-            <a class="item">First</a>
+                <a class="item">First</a>
             <% } else { %>
-            <a class="item" href="/sort/<%=id%>%>&1">First</a>
+                <a class="item" href="/sort/<%=id%>%>&1">First</a>
             <% } %>
             <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
             <% if (i !== 1) { %>
-            <a class="item"><a>...</a></a>
+                <a class="item"><a>...</a></a>
             <% } %>
             <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-            <% if (i == current) { %>
-            <a class="active item"><%= i %></a>
-            <% } else { %>
-            <a class="item" href="/sort/<%=id%>%>&<%= i %>"><%= i %></a>
-            <% } %>
-            <% if (i == Number(current) + 4 && i < pages) { %>
-            <a class="item">...</a>
-            <% } %>
+                <% if (i == current) { %>
+                    <a class="active item"><%= i %></a>
+                <% } else { %>
+                    <a class="item" href="/sort/<%=id%>%>&<%= i %>"><%= i %></a>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                    <a class="item">...</a>
+                <% } %>
             <% } %>
             <% if (current == pages) { %>
-            <a class="item">Last</a>
+                <a class="item">Last</a>
             <% } else { %>
-            <a class="item" href="/sort/<%=id%>%>&<%= pages %>">Last</a>
+                <a class="item" href="/sort/<%=id%>%>&<%= pages %>">Last</a>
             <% } %>
-            <% } %>
+        <% } %>
         </div>
     </div>
 </div>

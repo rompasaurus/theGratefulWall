@@ -83,5 +83,5 @@ app.use(password);
 ///uncomment to use as app on heroku
 app.listen(process.env.PORT||8080, process.env.IP, function(){
 //app.listen(8080, function(){
-    console.log("Grateful wall has started and is listening on port " + (process.env.PORT || "8080 ")+ "and IP " + process.env.IP);
+    console.log("Grateful wall has started and is listening on port " + (process.env.PORT || "8080 ")+ " and IP: " + process.env.IP);
 });
