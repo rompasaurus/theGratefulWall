@@ -8,7 +8,8 @@ var UserSchema = new mongoose.Schema({
     lastName: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    email: {type: String, unique: true, required:true},
+    googleId: String,
+    email: {type: String, unique: [true, "email already registered"], required:true},
     isAdmin: { type: Boolean, default: false },
     submittedComment:[
         {

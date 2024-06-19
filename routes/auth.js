@@ -45,12 +45,23 @@ router.get("/logout", function(req,res){
     res.redirect("/")
 });
 
+router.get('/auth/google',
+    passport.authenticate('google', { scope:
+        [ 'email', 'profile' ] }
+  ));
+  
+router.get( '/auth/google/callback',
+    passport.authenticate( 'google', {
+        successRedirect: "/user",
+        failureRedirect: "/login"
+}));
+
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next()
     }
-    console.log("something went terribly wrong");
+    console.log("SOMEONE AINT LOGGED IN");
     res.redirect("login")
 }
 

@@ -18,6 +18,7 @@ var bodyParser              = require("body-parser"),
     seedDB                  = require("./seed");
     flash                   = require("connect-flash");
     dotenv                  = require('dotenv');
+    GoogleStrategy          = require( 'passport-google-oauth2' ).Strategy;
 //seedDB();
 //import routes
 app.use(flash());
@@ -48,7 +49,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(require("express-session")({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,6 +60,18 @@ app.use(methodOverride("_method"));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback',
+    passReqToCallback: true
+    }, 
+    function(request, accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+          return done(err, user);
+        });
+      }
+));
 app.use(function(req,res,next) {
     res.locals.currentUser=req.user;
     next();

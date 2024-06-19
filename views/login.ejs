@@ -1,23 +1,51 @@
 <% include partials/header %>
-
+<style>
+    a {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+</style> 
 <div class="ui main text container segment">
     <div class="ui huge header">Login</div>
     <form class="ui form" action="/login" method="POST">
-        <div class="field">
-            <label>Username</label>
-            <input type="text" name= "username" placeholder="username">
-        </div>
-        <div class="field">
-            <label>Password</label>
-            <input type="password" name= "password" placeholder="password">
-        </div>
-        <div class="field">
-            <button class="ui button big" type="submit">Submit</button>
-        </div>
-      </form>
-    <P></P><a  href="/register">Register New Account</a></P>
-    <P><a  href="/password_reset">Forgot password ?</a></P>
+    <div class="field">
+        <label>Username</label>
+        <input type="text" name= "username" placeholder="username">
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <input type="password" name= "password" placeholder="password">
+    </div>
+    <div class="field">
+        <button class="fluid ui button" type="submit">Submit</button>
+    </div>
+    </form>
+    <div class="ui" href="/google/auth" id="buttonDiv"></div>
+    <br>
+    <div>
+        <a  href="/register">Register New Account</a>
+    </div>
+    <div>
+        <a  href="/password_reset">Forgot password</a>
+    </div>
+    <button href="/auth/google">Test Google</button>
 </div>
-</div>
-
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+  function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+  }
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "785513472168-6iufefmrfv00us2vq78nq96hkcca062p.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+      login_uri:"/auth/google"
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "medium" }  // customization attributes
+    );
+    //google.accounts.id.prompt(); // also display the One Tap dialog
+  }
+</script>
 <% include partials/footer %>
