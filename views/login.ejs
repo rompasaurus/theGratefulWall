@@ -5,6 +5,8 @@
         text-justify: inter-word;
     }
 </style> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="ui main text container segment">
     <div class="ui huge header">Login</div>
     <form class="ui form" action="/login" method="POST">
@@ -21,6 +23,7 @@
     </div>
     </form>
     <div class="ui" href="/google/auth" id="buttonDiv"></div>
+    <a href="/auth/google" class="fluid ui button"><span class="fa fa-google"></span> Sign in with Google</a>
     <br>
     <div>
         <a  href="/register">Register New Account</a>
@@ -28,24 +31,5 @@
     <div>
         <a  href="/password_reset">Forgot password</a>
     </div>
-    <button href="/auth/google">Test Google</button>
 </div>
-<script src="https://accounts.google.com/gsi/client" async></script>
-<script>
-  function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-  }
-  window.onload = function () {
-    google.accounts.id.initialize({
-      client_id: "785513472168-6iufefmrfv00us2vq78nq96hkcca062p.apps.googleusercontent.com",
-      callback: handleCredentialResponse,
-      login_uri:"/auth/google"
-    });
-    google.accounts.id.renderButton(
-      document.getElementById("buttonDiv"),
-      { theme: "outline", size: "medium" }  // customization attributes
-    );
-    //google.accounts.id.prompt(); // also display the One Tap dialog
-  }
-</script>
 <% include partials/footer %>

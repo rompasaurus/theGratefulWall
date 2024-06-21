@@ -19,6 +19,7 @@ var bodyParser              = require("body-parser"),
     flash                   = require("connect-flash");
     dotenv                  = require('dotenv');
     GoogleStrategy          = require( 'passport-google-oauth2' ).Strategy;
+
 //seedDB();
 //import routes
 app.use(flash());
@@ -47,10 +48,10 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(require("express-session")({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
+    secret: process.env.SECRET
+    //resave: false,
+    //saveUninitialized: false,
+    //cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,14 +61,26 @@ app.use(methodOverride("_method"));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+const redirectUrl = 'https://'+process.env.IP+':'+process.env.PORT + '/google/callback';
+
+console.log(redirectUrl);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //callBackURL: 'http://'+process.env.IP+':'+process.env.PORT,
     callbackURL: '/auth/google/callback',
     passReqToCallback: true
     }, 
     function(request, accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        console.log("Profile Authed : ", profile)
+        User.findOrCreate({
+            username: profile.displayName,
+            email: profile.email,
+            firstName: profile.given_name,
+            lastName: profile.family_name,
+            googleId: profile.id
+        }, function (err, user) {
           return done(err, user);
         });
       }
