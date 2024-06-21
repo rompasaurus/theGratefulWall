@@ -19,6 +19,7 @@ var bodyParser              = require("body-parser"),
     flash                   = require("connect-flash");
     dotenv                  = require('dotenv');
     GoogleStrategy          = require( 'passport-google-oauth2' ).Strategy;
+    FacebookStrategy        = require('passport-facebook');
 
 //seedDB();
 //import routes
@@ -62,13 +63,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const redirectUrl = 'https://'+process.env.IP+':'+process.env.PORT + '/google/callback';
-
-console.log(redirectUrl);
+//Google OAUTH Passport COnfig
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    //callBackURL: 'http://'+process.env.IP+':'+process.env.PORT,
     callbackURL: '/auth/google/callback',
     passReqToCallback: true
     }, 
@@ -85,6 +83,27 @@ passport.use(new GoogleStrategy({
         });
       }
 ));
+
+//Facebook OAUTH Config
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log("Profile Authed : ", profile)
+    User.findOrCreate({ 
+      username: profile.displayName,
+      email: profile.email,
+      firstName: profile.given_name,
+      lastName: profile.family_name,
+      facebookId: profile.id 
+    }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
 app.use(function(req,res,next) {
     res.locals.currentUser=req.user;
     next();
