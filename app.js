@@ -20,6 +20,7 @@ var bodyParser              = require("body-parser"),
     dotenv                  = require('dotenv');
     GoogleStrategy          = require( 'passport-google-oauth2' ).Strategy;
     FacebookStrategy        = require('passport-facebook');
+    GitHubStrategy          = require('passport-github2').Strategy;
 
 //seedDB();
 //import routes
@@ -58,6 +59,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 //initializes method overide to allow for put and delete requests
 app.use(methodOverride("_method"));
+
+//###AUthentication Strategies should prolly go in its own auth file
 //initilize User as auth db and establishes encryption serialization methods
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -102,6 +105,18 @@ passport.use(new FacebookStrategy({
       return cb(err, user);
     });
   }
+));
+
+passport.use(new GitHubStrategy({
+  clientID:  process.env.GITHUB_CLIENT_ID,
+  clientSecret:  process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: "/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    return done(err, user);
+  });
+}
 ));
 
 app.use(function(req,res,next) {

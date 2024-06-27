@@ -67,6 +67,18 @@ router.get( '/auth/facebook/callback',
         failureRedirect: "/login"
 }));
 
+router.get('/auth/github',
+    passport.authenticate('github', { scope: [ 'user:email' ] }));
+  
+router.get('/auth/github/callback', 
+    passport.authenticate('github', { 
+        successRedirect: "/user",
+        failureRedirect: '/login' 
+}),
+function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/user');
+});
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
